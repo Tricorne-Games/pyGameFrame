@@ -1,0 +1,68 @@
+Programming Conventions 
+=======================
+This document is made to help list different variable prefixes in a program; to tell the programmer what a variable is, inside a script.
+
+Put these to the left of the name desired, followed by an underscore, to make it easier to know what each object made is, like so:
+
+DIR_Save -> Save Directory
+QUE_ClientInfo -> Client Info Queue
+
+It works similar to how file extensions tell us what kind of files they are, by telling what kind of information a statement is in a program. This is optional and you can even use your own, but in extremely large programs with many scripts filled with many lines, this can be more than helpful!
+
+-----
+Sample Conventions
+
+AST = Asset
+ATR = Attribute
+CLS = Class
+CLT = Client
+DAT = Data
+DIC = Dictionary
+DIR = Directory
+FIL = File
+FNC = Function
+IDX = Index
+INT = Integer
+LBL = Label
+LST = List
+MOD = Module
+MTD = Method
+MTX = Matrix
+NUM = Number
+OBJ = Object
+PTH = Path
+PKL = Pickle
+PRC = Process
+PAR = Parameter
+QUE = Queue
+ROU = Route
+RTN = Return
+SKT = Socket
+SRV = Server
+STR = String
+THR = Thread
+TUP = Tuple
+TXT = Text
+VAL = Value
+VAR = Variable
+
+-----
+
+Game-Related Conventions
+
+CHP = Chapter (or sub-loop of the game)
+CHA = Charactor (the actors of a game like the hero or baddy)
+CHC = Choice
+CHR = Character (an individual letter/number of text)
+CHG = Charge (for things like charging up)
+CHN = Change
+IMG = Image
+LVL = Level
+MUS = Music
+MNU = Menu
+RCT = Rect
+SAV = Save Data
+SFC = Surface
+SND = Sound
+SPT = Sprite
+SST = Spritesheet
