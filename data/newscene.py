@@ -91,7 +91,7 @@ class SCN_new(object):
 			dt = float(fs['CLOCK'].tick(fs['VIDEO'].fps)) # Lock framerate and return milliseconds since last tick() as delta-time.
 			if dt > 1000.0 / fs['VIDEO'].fps:
 				dt = 1000.0 / fs['VIDEO'].fps             # Cap delta-time at the maximum amount of milliseconds per frame.
-				df = dt / 1000.0                          # Convert delta-time to delta-frame, for frame-independent motion.
+				fs['VIDEO'].df = dt / 1000.0              # Convert delta-time to delta-frame, for frame-independent motion.
 
 
 

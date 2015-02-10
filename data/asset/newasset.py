@@ -118,7 +118,7 @@ class assetname(object):
 
 			# Standard Attributes (image & rect)
 			self.image = assetname.SPT.frm[0]     # The main image displayed.
-			self.rect = self.image.get_rect()           # The rect containing the sprite.
+			self.rect = self.image.get_rect()     # The rect containing the sprite.
 
 			# Auxiliary Attributes (manipulation, animation, etc.)
 			self.alpha = 255 # Alpha Channel value for translucency effects.

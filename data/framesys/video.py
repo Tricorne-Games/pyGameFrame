@@ -33,6 +33,7 @@ class video(object):
 		self.bits = 0                                                # Bit Depth (0 = Desktop Depth)
 		self.size = size                                             # Screen Size/Resolution/Dimensions
 		self.fps = fps                                               # Framerate (Frames Per Second)
+		self.df = 0                                                  # Delta-Frame, used for frame-independent motion.
 
 		# NOTE ON RESIZING THE SCREEN
 		# Only use RESIZABLE if you absolutely intend to have your game window resizable, and know what you're doing.
