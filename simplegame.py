@@ -49,8 +49,23 @@ class game(object):
 		FLUSH.fill((0, 0, 255))                              # Colors the Flush surface.
 		LST_rectchange = None                                # Use None = Full-Screen Update / Use [] = Location-Specific Update
 
-		# Sprite Groups [0-N, where 0 is backmost, N is foremost.]
-		LST_spritegroup = [pygame.sprite.RenderUpdates()] # Identify each sprite group here.
+		# Sprite Groups
+		# This collects your sprites in sprite groups to be called for updates in a sequence.
+		#
+		# Sprite Key - A simple list of the names for each sprite group to be used as keys in the dictionary.
+		# Put these in a specific order for the LST_spritegroup to use, when rendering from back to front.
+		# 0-N; where 0 is backmost, closest depth to background. N is foremost, closest depth to player.
+		KEY_spritegroup = [
+			'sample'
+		]
+		# Sprite Dictionary - A dictionary of the sprite groups, to simplify calling a specific group by key.
+		DIC_spritegroup = {}
+		# Sprite List - A List of the groups in the dictionary, to use for sprite updating. Also in specific order.
+		LST_spritegroup = []
+		# This loop compiles both the DIC and the LST in the order written in KEY.
+		for eachkey in KEY_spritegroup:
+			DIC_spritegroup[eachkey] = pygame.sprite.RenderUpdates()
+			LST_spritegroup.append(DIC_spritegroup[eachkey])
 
 
 
@@ -65,6 +80,7 @@ class game(object):
 				self.image = pygame.Surface((32, 32)).convert()
 				self.rect = self.image.get_rect()
 
+				self.df = 0
 				self.speed = 150.0
 				self.rgb = [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)]
 				self.colorstate = [random.choice(['+', '-']), random.choice(['+', '-']), random.choice(['+', '-'])]
@@ -130,6 +146,10 @@ class game(object):
 			if dt > 1000.0 / FPS:
 				dt = 1000.0 / FPS       # Cap delta-time at the maximum amount of milliseconds per frame.
 			df = dt / 1000.0            # Convert delta-time to delta-frame, for frame-independent motion.
+			# Assign the video() delta-frame to all sprites.
+			for eachgroup in LST_spritegroup:
+				for eachsprite in eachgroup.sprites():
+					eachsprite.df = df
 
 
 			# EVENT HANDLING

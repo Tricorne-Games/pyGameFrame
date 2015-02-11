@@ -32,9 +32,6 @@ information, game-wide."""
 import pygame
 from pygame.locals import *
 
-from ..framesys.audio import audio
-
-
 
 
 
@@ -120,8 +117,9 @@ class assetname(object):
 			self.image = assetname.SPT.frm[0]     # The main image displayed.
 			self.rect = self.image.get_rect()     # The rect containing the sprite.
 
-			# Auxiliary Attributes (manipulation, animation, etc.)
-			self.alpha = 255 # Alpha Channel value for translucency effects.
+			# Auxiliary Attributes
+			self.df = fs['VIDEO'].df # Delta-Frame; for frame-independent motion. Updates from ['VIDEO'] every frame.
+			self.alpha = 255         # Alpha Channel value for translucency effects.
 
 			# Animation Attributes
 			self.cf = 0           # The number to identify a 'current frame'.

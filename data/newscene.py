@@ -53,20 +53,29 @@ class SCN_new(object):
 		canvas = pygame.Surface(fs['VIDEO'].size).convert() # A background canvas.
 		canvas.fill((255, 255, 255))                        # Fill the canvas.
 		fs['VIDEO'].disp.blit(canvas, (0, 0))               # Blit the canvas to the display.
-		fs['VIDEO'].show()                                  # Show.
 
-		# Sprite Group Dictionary
-		# Add the sprites to these directly in later code.
-		# Below is a dictionary to simplify pointing to a specific sprite group.
-		DIC_spritegroup = {
-			'sample': pygame.sprite.RenderUpdates()
-		}
-		# Sprite Group List
-		# This orders the sprite groups in the sprite group dictionary above.
+		# Show Screen
+		fs['VIDEO'].show()
+
+
+		# Sprite Groups
+		# This collects your sprites in sprite groups to be called for updates in a sequence.
+		#
+		# Sprite Key - A simple list of the names for each sprite group to be used as keys in the dictionary.
+		# Put these in a specific order for the LST_spritegroup to use, when rendering from back to front.
 		# 0-N; where 0 is backmost, closest depth to background. N is foremost, closest depth to player.
-		LST_spritegroup = [
-			DIC_spritegroup['sample']
-		] # Sample Group
+		KEY_spritegroup = [
+			'sample'
+		]
+		# Sprite Dictionary - A dictionary of the sprite groups, to simplify calling a specific group by key.
+		DIC_spritegroup = {}
+		# Sprite List - A List of the groups in the dictionary, to use for sprite updating. Also in specific order.
+		LST_spritegroup = []
+		# This loop compiles both the DIC and the LST in the order written in KEY.
+		for eachkey in KEY_spritegroup:
+			DIC_spritegroup[eachkey] = pygame.sprite.RenderUpdates()
+			LST_spritegroup.append(DIC_spritegroup[eachkey])
+
 
 		# Game Objects
 		x = assetname(fs)
@@ -91,7 +100,11 @@ class SCN_new(object):
 			dt = float(fs['CLOCK'].tick(fs['VIDEO'].fps)) # Lock framerate and return milliseconds since last tick() as delta-time.
 			if dt > 1000.0 / fs['VIDEO'].fps:
 				dt = 1000.0 / fs['VIDEO'].fps             # Cap delta-time at the maximum amount of milliseconds per frame.
-				fs['VIDEO'].df = dt / 1000.0              # Convert delta-time to delta-frame, for frame-independent motion.
+			fs['VIDEO'].df = dt / 1000.0                  # Convert delta-time to delta-frame, for frame-independent motion.
+			# Assign the video() delta-frame to all sprites.
+			for eachgroup in LST_spritegroup:
+				for eachsprite in eachgroup.sprites():
+					eachsprite.df = fs['VIDEO'].df
 
 
 
