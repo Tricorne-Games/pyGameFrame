@@ -136,13 +136,6 @@ class assetname(object):
 
 
 		# Other Sprite Functions
-		def matchRect(self):
-			"""Make sure the sprite's rect matches with the sprite's image."""
-			# You can call this code each time there is a change in the sprite image size.
-			# This keeps the rect consistent to the image's size when using the rect.
-			if self.rect != self.image.get_rect():
-				self.rect = self.image.get_rect()
-
 		def animate(self):
 			"""Sample method to animate something."""
 			self.pause += 1                       # Add to self.pause.
