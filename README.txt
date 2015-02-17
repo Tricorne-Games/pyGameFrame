@@ -5,7 +5,7 @@ pyGameFrame
 
 REQUIREMENTS
 
-This system was written in Python 2.7.9, using Pygame 1.9.1 release designed for Python 2.7. You can download each of these at:
+This system was written in Python 2.7.9, using the Pygame 1.9.1 release designed for Python 2.7. You can download each of these at:
 
 www.python.org
 www.pygame.org
@@ -18,7 +18,7 @@ pyGameFrame is freely usable software, aimed to help aspiring game designers and
 
 The license included is only to preserve the authorship of this base. It is not required to include it for your games (because this code is designed to get strongly altered to become a game of one's own), but a courtesy credit is highly appreciated.
 
-Credit goes to the people who made Python and Pygame happen, to allow this framework to be built.
+Credit goes to the people who made Pygame happen, for providing a useful game development library for Python.
 
 
 

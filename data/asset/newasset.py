@@ -114,8 +114,8 @@ class assetname(object):
 													 			(255, 0, 255))
 
 			# Standard Attributes (image & rect)
-			self.image = assetname.SPT.frm[0]     # The main image displayed.
-			self.rect = self.image.get_rect()     # The rect containing the sprite.
+			self.image = assetname.SPT.frm[0] # The main image displayed.
+			self.rect = self.image.get_rect() # The rect containing the sprite.
 
 			# Auxiliary Attributes
 			self.df = fs['VIDEO'].df # Delta-Frame; for frame-independent motion. Updates from ['VIDEO'] every frame.
@@ -138,11 +138,11 @@ class assetname(object):
 		# Other Sprite Functions
 		def animate(self):
 			"""Sample method to animate something."""
-			self.pause += 1                       # Add to self.pause.
+			self.pause += 1                                # Add to self.pause.
 			if self.pause >= self.delay:
-				self.pause = 0                    # Reset self.pause.
-				self.cf += 1                      # Prepare next frame.
+				self.pause = 0                             # Reset self.pause.
+				self.cf += 1                               # Prepare next frame.
 				if self.cf >= len(assetname.SPT.frm):
-					self.cf = 0                   # Reset next frame to 0.
+					self.cf = 0                            # Reset next frame to 0.
 			self.image = assetname.SPT.frm[self.cf]        # Turn the sprite image into the frame.
 			self.matchRect()

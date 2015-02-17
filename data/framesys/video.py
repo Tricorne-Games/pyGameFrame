@@ -23,7 +23,7 @@ from pygame.locals import *
 class video(object):
 	"""The Video class; contains material to help streamline display management."""
 
-	def __init__(self, caption='UNTITLED', size=(800, 600), fps=60):
+	def __init__(self, caption='UNTITLED', size=(800, 600), fps=60.0):
 		"""Initialize the Video system."""
 		# Display Attributes
 		self.disp = None                                             # Display Window
