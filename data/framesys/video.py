@@ -152,10 +152,10 @@ class video(object):
 		"""Toggles full-screen display."""
 		if self.fs_switch is False:
 			self.fs_switch = True
-			self.disp = pygame.display.set_mode(self.resolution, self.fs_sets, self.bits)
+			self.disp = pygame.display.set_mode(self.size, self.fs_sets, self.bits)
 		elif self.fs_switch is True:
 			self.fs_switch = False
-			self.disp = pygame.display.set_mode(self.resolution, self.disp_sets, self.bits)
+			self.disp = pygame.display.set_mode(self.size, self.disp_sets, self.bits)
 
 	def resize(self, event):
 		"""Resizes and redefines the screen."""
