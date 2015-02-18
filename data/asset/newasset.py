@@ -145,4 +145,3 @@ class assetname(object):
 				if self.cf >= len(assetname.SPT.frm):
 					self.cf = 0                            # Reset next frame to 0.
 			self.image = assetname.SPT.frm[self.cf]        # Turn the sprite image into the frame.
-			self.matchRect()
