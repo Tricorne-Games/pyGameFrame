@@ -1,157 +1,122 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+
+"""game
+
+This file contains the function that prepares
+the game resources and runs the game."""
+
+# Import built-in libraries.
+import os
+import sys
+
+# Import supplementary libraries.
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'hide'
+import pygame
+from pygame.locals import *
+
+# Import local modules.
+import mgr_video
+import mgr_audio
+import mgr_input
+import mgr_scene
+import mgr_sprite
+
+from uevents import uEvent
 
 
 
-# File Docstring
-"""Game
-
-This is the main script that encapsulates all of the game data,
-reads it to prepare for action, and finally renders the game."""
 
 
+# Constants
+name = "Untitled"
+version = 'v0'
+date = 'DATE'
+author = "AUTHOR"
 
-# Game Class
-class game(object):
-	"""The 'game' class, to encapsulate the game data and system."""
+def showDetailsConsole():
+    """A quick text script to display information in the console when starting."""
+    # NOTE: This will not show up if the main script is a .pyw file.
+    
+    global name, version, date, author
+        
+    output = name + """ - """ + version + """
+""" + date + """ """ + author + """
 
-	# Game Information
-	name = 'UNTITLED GAME' # Game Name
-	version = 'v0'         # Build Version
-	date = 'DATE'          # Date the game was made.
-	author = 'AUTHOR'      # Creator of the game.
-
-	def __init__(self):
-		"""Initialize an instance of the game object. You can pass game-specific variables here."""
-		pass
-
-	def console_detail(self):
-		output = """UNTITLED GAME - v0
-DATE AUTHOR
-
-This is an example of what the console would put out when the game runs.
+This is an example of what the console would output when the game runs.
 You can form this and above text however you like.
 
-Alternatively, you can make this file have a .pyw extension instead, and
-that will disable the console from popping up before the game."""
-		print(output)
-		print('')
+Alternatively, you can make the main execution script have a .pyw
+extension instead, and that will disable the console from popping up
+before the game."""
+    print(output)
+    print('')    
 
+def run():
+    """Run the game."""
+    global name
 
-	def run(self):
-		"""Execute and run the game."""
+    # Show Details (Console)
+    showDetailsConsole()
+    
+    # Start Pygame
+    pygame.init()
 
-		# Start-Up
-		self.console_detail() # The console will not show if this file is a .pyw extension.
+    # Splash Screen
+    mgr_video.showSplashScreen('splash.png')
 
-		# Initialize Pygame and System Settings
-		# This prepares the background settings the game will run with.
-		pygame.mixer.pre_init(44100, 16, 2, 4096) # Pygame Sound Mixer Presets (freq, size, mono/stereo, buffer)
-		pygame.init()                             # Initialize Pygame Library
-		os.environ['SDL_VIDEO_CENTERED'] = '1'    # Center Window Display
+    # Prepare Managers
+    mgr_video.showMainScreen(name) # Show display.
+    mgr_video.clock.tick()
+    mgr_audio.preinitMixer()
+    mgr_audio.loadMixer()
+    mgr_audio.setChannels()
+    mgr_audio.setSongs()
+    mgr_input.setControllers() # Set up controllers if any.
+    mgr_scene.setScenes()
+    #mgr_sprite for spritesheets.
 
+    # Starting Scene
+    mgr_scene.currentScene = mgr_scene.scene['E']()
 
-		# Framework System Setup
-		# This is a dictionary of the different components the game can call on to do its
-		# back-end work to help run the game, such as multimedia, framerate, networking, etc.
-		#
-		# Each of the dictionary values here are all objects inside the 'framesys' folder,
-		# and have a specific set of operations as components:
-		# VIDEO handles the screen/display.
-		# AUDIO handles the sounds/music.
-		# JOY handles the joystick/controller systems if the game will use them.
-		# SPRITER handles the creation and formatting of sprite graphics.
-		# CLOCK handles the Pygame clock system, for things like framerate.
-		# FONT handles a system font for basic uses.
-		FS = {
-			'VIDEO':   video(),
-			'AUDIO':   audio(),
-			'JOY':     joy(),
-			'SPRITER': spriter(),
-			'CLOCK':   pygame.time.Clock(),
-			'FONT':    pygame.font.SysFont(None, 12)
-		}
+    # Core Loop
+    loop_active = True
+    while loop_active is True:
+        # Handle Framerate/Delta-Frame
+        mgr_video.handleFramerate()
 
-		# Start Application
-		FS['VIDEO'].splashscreen(2)       # Show Splashscreen (OPTIONAL)
+        # Input Tracking
+        mgr_input.updateCheck()
 
-		FS['VIDEO'].mainscreen()          # Show Main Screen
-		FS['CLOCK'].tick(FS['VIDEO'].fps) # Establish Framerate
-		pygame.event.get()                # Purge Event Queue
+        # Scene Tracking
+        if mgr_scene.currentScene.nextScene == 'TERMINATE':
+            loop_active = False
+        elif mgr_scene.currentScene.nextScene == 'CURRENT':
+            pass
+        else:
+            # NOTE: The game will crash if a non-existent scene is called.
+            mgr_scene.swap = mgr_scene.currentScene.nextScene
+            mgr_scene.currentScene = mgr_scene.scene[mgr_scene.swap]
+            mgr_scene.currentScene.nextScene = 'CURRENT'
+            mgr_scene.swap = ''
 
-		# Load Game Assets
-		# Prepare all of the game assets before running the game.
-		# This makes it so new data, such as sprite instances, are produced
-		# without loading them the first time during the game.
-		# If this will be a long list, consider using a separate module.
-		FS['SPRITER'].loadSpritesheets()
-		assetname(FS)
+        # Event Tracking
+        pygame.event.pump()
+        filtered_events = []
+        for eachEvent in pygame.event.get():
+            if eachEvent.type == QUIT:
+                loop_active = False
+            else:
+                filtered_events.append(eachEvent)
 
-		# Core Loop
-		# This starts up the game and keeps it open as an application.
-		CL = True # Core Loop Switch
-		while CL == True:
-			FS['CLOCK'].tick(FS['VIDEO'].fps) # Maintain Framerate
-			pygame.event.pump()               # Pump events to prevent lock-up when no events pass.
+        # Cycle Scene
+        mgr_sprite.changerects = [] # Clear changerects from any scenes that use RenderUpdates.
+        mgr_scene.currentScene.process(filtered_events)
+        mgr_scene.currentScene.update()
+        mgr_scene.currentScene.render(mgr_video.display)
+        
+        # Display Frame
+        mgr_video.showFrame(mgr_sprite.changerects)
 
-
-
-			# Scene Tree
-			# In a game, you are seeing in scenes, such as Main Menu, Character Select, etc.
-			# This section of the loop maps the navigation between scenes during the game.
-			# For example, a Main Menu scene could be the first scene. When an option is selected,
-			# it returns a value or more that this section will interpret to point to the next scene,
-			# and with the appropriate data if applicable.
-			newscene = SCN_new()                                           # New Scene
-			ROU_newscene = newscene.start(FS)                              # Start the scene, wait for a route value.
-			if ROU_newscene == 'END SCENE' or ROU_newscene == 'EXIT GAME':
-				CL = False                                                 # End the Core Loop immediately.
-			else:
-				pass
-
-
-
-		# Clean-Up
-		pygame.quit()     # Close Pygame
-		return 'END GAME' # End Run
-
-
-
-
-
-# Main Program
-if __name__ == '__main__':
-
-	# IMPORT GAME RESOURCES
-	# Python Standard Packages
-	import __init__
-	import pickle
-	import os
-	import sys
-
-	import math
-	import random
-
-	import time
-	import datetime
-
-	# Third-Party Packages
-	import pygame
-	from pygame.locals import *
-
-	# Framework System
-	from data.framesys.video import *
-	from data.framesys.audio import *
-	from data.framesys.joy import *
-	from data.framesys.spriter import *
-
-	# Game Scenes
-	from data.newscene import *
-
-	# Game-Specific Packages
-	from data.asset.newasset import *
-
-
-
-	# GAME
-	game().run() # Start Game
-	sys.exit(0)  # Exit Game
+    # Close
+    pygame.quit()
+    sys.exit(0)

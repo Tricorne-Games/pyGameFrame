@@ -1,53 +1,47 @@
-pyGameFrame
-2015 by Tricorne Games
+pyGameFrame - Pygame Project Template
+By Tricorne Games
+9-8-2019
 
+pyGameFrame is a template package designed to help you getting to programming your own games in the Pygame system right away. A lot of the gruntwork is taken care of to ensure the ease of use and to make sure all the properties necessary are assembled together for the most efficient use of the Pygame platform. It is meant to be torn and retooled to your needs without having to write everything from scratch, and for what you do leave alone, everything is specially prepared, such as convert() calls for graphics, a delta-frame variable for frame-independent motion, using an MVC model, a scene management system, a .ico file for your own window corner icon, a "main" script that most games use formally, and more.
 
+This version of pyGameFrame is not much different from its predecessor. The major change is where everything including the game itself was an object that could be instantiated, it is now so that any component where there should ever only be one instance anyway (including the game itself and its managers) have been retooled into being the modules themselves that contain them, for cleanliness (thus a lot less "self" calls and making parameters out of everything).
 
-REQUIREMENTS
+Here are the files used to make this package:
 
-This system was written in Python 2.7.9, using the Pygame 1.9.1 release designed for Python 2.7. You can download each of these at:
+main.py - The file that calls and executes the game as a main file.
 
-www.python.org
-www.pygame.org
+bases.py - Base component objects get defined here.
 
+game.ico - The icon you see in the top-left corner of the game window, if using a windowed display. The Video Manager has a function that specially prepares this when calling the display window, so all you would really need to change is this icon specifically. Maximum size is 32x32.
 
+game.py - The main game setup and loop function.
 
-DISCLAIMER
+mgr_audio.py - The Audio Manager. Anything involving work with the audio, such as channels, music, sound effects, etc. should go here.
 
-pyGameFrame is freely usable software, aimed to help aspiring game designers and developers. You may use it and modify it to best suit your needs, including commercial use.
+mgr_input.py - The Input Manager. Anything involving inputs such as keyboard, mouse, controllers, etc. should go here.
 
-The license included is only to preserve the authorship of this base. It is not required to include it for your games (because this code is designed to get strongly altered to become a game of one's own), but a courtesy credit is highly appreciated.
+mgr_scene.py - The Scene Manager. Also known as game states, this controls the flow of scenes during runtime. Each scene is a separate object, and this manager files maintains them and their swapping during play.
 
-Credit goes to the people who made Pygame happen, for providing a useful game development library for Python.
+mgr_sprite.py - The Sprite Manager. This handles the operations to put together spritegroups and spritesheets. Sprite objects themselves should be handled in whatever objects that have their own sprites, whereas this manager prepares those sprites collectively.
 
+mgr_video.py - The Video Manager. This handles the display, framerate, delta-frame variable for frame-independent motion, etc.
 
+model.py - The game model. This is where the game-wide logic is typically stored and manipulated. Scenes A and B demonstrate this by changing a single value that maintains itself between the two scenes.
 
-ABOUT
+scn_a - A test scene used to swap between A and B. Also used to test model updates between both scenes.
 
-pyGameFrame is a template set of Python files written and designed to help the end user develop games in the Python/Pygame environment; with a simple copy-paste preparing your whole project and all of the technical stuff ready to go.
+scn_b - A test scene used to swap between A and B. Also used to test model updates between both scenes.
 
-The advantage given is that a lot of the technical clout, such as setting sprites, audio management, and visual setup is all done, and prepared for efficient, streamlined development, so the user can focus on developing the logic and assets of the game instead. Like any Python project, it is also mutable, so it can be torn apart and remodeled to better fit the developer's needs.
+scn_c - A test scene used to intentionally crash the game if a non-existent scene is called.
 
-First built as "Santo's Pygame Template", it was created by looking through different resources on the Pygame system, including documentation, books, websites, and even pygame-built games, to eventually develop a "consistent" formula that made the most sense with how Pygame works. Two more versions, retitled "pyGameFrame", followed with a bigger clean-up job; the latter included being ported over to Python 3.
+scn_d - A test scene for seeing if posting user-defined events work.
 
-In this version, it was decided to use the latest and final version of Python 2 (2.7.9), to allow use of the extensive amount of libraries available to that version, at the time this was programmed. However, it was written with care to make it a less troublesome transition to Python 3, if that is the developer's choice of version to use.
+scn_e - A test scene for checking sprite group updating.
 
+scn_f - A test scene for checking sprite group updating, using the RenderUpdates group.
 
+spt_a - A test Actor object with a local Sprite object, used in Scenes E and F. It's a square that follows the mouse cursor. Used to represent a sprite and its parent actor object.
 
-HOW IT WORKS
+splash.png - A sample graphic to demonstrate the use of a splash screen. This is an optional component and can be disabled in the game.py file.
 
-1. The "game" file starts by first creating a game() object, which encapsulates all of the files found in the /data/ directory.
-
-2. The /data/ directory contains the following, and sends it over for the game() object to initialize:
-
-a. The "scene" files inside /data/ - These are the different scenes you see in each step of the game, such as title screen, main menu, the game action, levels, etc. Other than the back-end gear, scene files make up the meat of your game's activity. This is where most of your coding should happen.
-
-b. /framesys/ - This is the directory that does the back-end work of the game. It handles the audio() manager (controls sound channels, loads sound files, etc.), the video() manager (handles screen updating, splashscreens, fullscreening, etc.), the joy() manager (handles joystick/controller input), and lastly, a custom tool unique to pyGameFrame, called the Spriter(), which manages all of the spritesheets and cookie-cuts the specific sprite surfaces for any assets that need them.
-
-c. /assets/ - This contains two different kinds of assets: your media assets (sounds, graphics, etc.), and your logical assets (player data, etc.).
-
-3. That game() object from the first step now puts all these resources from /data/ in a specific order, between preparing the /framesys/ materials, preloading all of the assets, etc.
-
-4. Finally, that game() object is now called to run (along with all the other prep work in the __name__ == __main__ condition), and thus starts the game loop, awaiting any point the player exits for a clean clean-up.
-
-The idea of this framework is to copy-paste the entire project, and now you have everything you need to begin coding even a basic game with everything you need done to render your game and polished to help you organize. However, you are encouraged to mod it totally as you see fit. For example, maybe you really don't need the joy() manager, or you want to set up a server() manager to have a networked game, or you can have another directory or three inside /data/, such as for save files, utility scripts to handle complex logic inside a scene, etc.
+uevents.py - A module containing a dictionary of all user-defined events. Create your own here following the same model as 'Test' and 'Tick'.
