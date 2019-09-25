@@ -20,6 +20,7 @@ from scn_c import SceneC # Swap Scene Nonexistent
 from scn_d import SceneD # User Event Test Scene
 from scn_e import SceneE # Test Sprite Groups
 from scn_f import SceneF # Test Location-Specific Sprite Updating
+from scn_g import SceneG # Test camera scrolling.
 
 
 
@@ -44,5 +45,6 @@ def setScenes():
         'C':SceneC,
         'D':SceneD,
         'E':SceneE,
-        'F':SceneF
+        'F':SceneF,
+        'G':SceneG
     }

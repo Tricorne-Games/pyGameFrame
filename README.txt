@@ -12,7 +12,7 @@ main.py - The file that calls and executes the game as a main file.
 
 bases.py - Base component objects get defined here.
 
-camera.py - A rudimentary camera object to help with things like scrolling worlds or pseudo-3D projection.
+tools.py - A place for tools to be used such as the included Camera() object, or anything else you want, like algorithms.
 
 game.ico - The icon you see in the top-left corner of the game window, if using a windowed display. The Video Manager has a function that specially prepares this when calling the display window, so all you would really need to change is this icon specifically. Maximum size is 32x32.
 
@@ -41,6 +41,8 @@ scn_d - A test scene for seeing if posting user-defined events work.
 scn_e - A test scene for checking sprite group updating.
 
 scn_f - A test scene for checking sprite group updating, using the RenderUpdates group.
+
+scn_g - A test scene for testing camera translation.
 
 spt_a - A test Actor object with a local Sprite object, used in Scenes E and F. It's a square that follows the mouse cursor. Used to represent a sprite and its parent actor object.
 

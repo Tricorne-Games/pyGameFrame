@@ -76,7 +76,7 @@ def run():
     #mgr_sprite for spritesheets.
 
     # Starting Scene
-    mgr_scene.currentScene = mgr_scene.scene['E']()
+    mgr_scene.currentScene = mgr_scene.scene['G']()
 
     # Core Loop
     loop_active = True
