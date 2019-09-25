@@ -12,6 +12,8 @@ main.py - The file that calls and executes the game as a main file.
 
 bases.py - Base component objects get defined here.
 
+camera.py - A rudimentary camera object to help with things like scrolling worlds or pseudo-3D projection.
+
 game.ico - The icon you see in the top-left corner of the game window, if using a windowed display. The Video Manager has a function that specially prepares this when calling the display window, so all you would really need to change is this icon specifically. Maximum size is 32x32.
 
 game.py - The main game setup and loop function.
@@ -45,3 +47,7 @@ spt_a - A test Actor object with a local Sprite object, used in Scenes E and F. 
 splash.png - A sample graphic to demonstrate the use of a splash screen. This is an optional component and can be disabled in the game.py file.
 
 uevents.py - A module containing a dictionary of all user-defined events. Create your own here following the same model as 'Test' and 'Tick'.
+
+server.py - A rudimentary socket server to test with. NOT SECURE - USE AT YOUR OWN RISK!
+
+client.py - A rudimentary client for the socket server. NOT SECURE - USE AT YOUR OWN RISK!
