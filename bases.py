@@ -50,3 +50,13 @@ class Actor(object):
     def __init__(self):
         """Initialize the actor."""
         pass
+    
+
+
+# Player Class
+class Player(object):
+    """The base Player class."""
+
+    def __init__(self, iden):
+        """Initialize the player."""
+        self.iden = iden

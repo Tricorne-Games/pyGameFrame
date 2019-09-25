@@ -100,4 +100,5 @@ def showFrame(changerects):
 
 def flushBuffer(color=(0, 0, 0)):
     """Wipes the buffer entirely."""
+    global display
     display.fill(color)
