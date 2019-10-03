@@ -53,3 +53,5 @@ uevents.py - A module containing a dictionary of all user-defined events. Create
 server.py - A rudimentary socket server to test with. NOT SECURE - USE AT YOUR OWN RISK!
 
 client.py - A rudimentary client for the socket server. NOT SECURE - USE AT YOUR OWN RISK!
+
+/gui/ - This folder is a boilerplate for a wxPython application, which can be useful to build an editor with.
